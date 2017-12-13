@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Radio, { RadioGroup } from 'material-ui/Radio';
-import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
+import { FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
 
 const styles = theme => ({
     root: {
@@ -16,19 +16,19 @@ const styles = theme => ({
     },
 });
 
-const Question = ({ classes, question, options, handleSelectAnswer, answer }) =>
+const Question = ({ classes, question, options, handleSelectAnswer, answer, correctAnswer }) =>
     <div className={classes.root}>
         <FormControl component="fieldset" required error className={classes.formControl}>
             <RadioGroup
                 aria-label={question}
-                name="gender2"
+                name={question}
                 className={classes.group}
                 value={answer}
-                onChange={(e) => handleSelectAnswer(e.target.value)}
+                onChange={(e, value) => handleSelectAnswer(value)}
             >
                 {options.map(opt => <FormControlLabel value={opt} control={<Radio />} label={opt} />)}
             </RadioGroup>
-            <FormHelperText>You can display an error</FormHelperText>
+            {answer !== correctAnswer && <FormHelperText>Select correct answer</FormHelperText>}
         </FormControl>
     </div>
 

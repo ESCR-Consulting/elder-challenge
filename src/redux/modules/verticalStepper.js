@@ -1,5 +1,7 @@
 const SELECT_ANSWER = 'SELECT_ANSWER';
+const PREV_STEP = 'PREV_STEP';
 const NEXT_STEP = 'NEXT_STEP';
+const RESET = 'RESET';
 
 export function handleSelectAnswer(answer){
     return {
@@ -8,9 +10,21 @@ export function handleSelectAnswer(answer){
     }
 }
 
+export function handlePrevStep(){
+    return {
+        type: PREV_STEP,
+    }
+}
+
 export function handleNextStep(){
     return {
         type: NEXT_STEP,
+    }
+}
+
+export function handleReset(){
+    return {
+        type: RESET,
     }
 }
 
@@ -58,6 +72,21 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 answer: action.answer
+            };
+        case PREV_STEP:
+            return {
+                ...state,
+                activeStep: state.activeStep < 1 ? state.activeStep - 1 : 0
+            };
+        case NEXT_STEP:
+            return {
+                ...state,
+                activeStep: state.activeStep < 4 ? state.activeStep + 1 : 0
+            };
+        case RESET:
+            return {
+                ...state,
+                activeStep: 0
             };
         default:
             return state;
